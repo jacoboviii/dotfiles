@@ -8,6 +8,7 @@ return {
 
     -- Additional lua configuration, makes nvim stuff amazing!
     'folke/neodev.nvim',
+    'folke/neoconf.nvim',
   },
   config = function()
     -- [[ Configure LSP ]]
@@ -84,10 +85,12 @@ return {
     --  define the property 'filetypes' to the map in question.
     local servers = {
       -- clangd = {},
+      intelephense = {},
       gopls = {},
       pyright = {},
       -- rust_analyzer = {},
       tsserver = {},
+      volar = { filetypes = { 'vue', 'typescript', 'javascript' } },
       html = { filetypes = { 'html', 'twig', 'hbs' } },
       templ = {},
       lua_ls = {
@@ -102,6 +105,7 @@ return {
 
     -- Setup neovim lua configuration
     require('neodev').setup()
+    require('neoconf').setup()
 
     -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
     local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -116,6 +120,9 @@ return {
 
     mason_lspconfig.setup_handlers {
       function(server_name)
+        if require('neoconf').get(server_name .. '.disable') then
+          return
+        end
         require('lspconfig')[server_name].setup {
           capabilities = capabilities,
           on_attach = on_attach,
