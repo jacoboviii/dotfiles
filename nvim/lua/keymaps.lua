@@ -13,6 +13,7 @@ vim.keymap.set("n", "<leader>h", "<Cmd>noh<CR>", { desc = "Clear [H]ighlight" })
 vim.keymap.set("n", "<leader>q", "<Cmd>q<CR>", { desc = "[Q]uit" })
 vim.keymap.set("n", "<leader>w", "<Cmd>w<CR>", { desc = "[W]rite" })
 vim.keymap.set("n", "<leader>c", "<Cmd>bdelete<CR>", { desc = "[C]lose Current Buffer" })
+vim.keymap.set("n", "<leader>o", "<Cmd>BufferLineCloseOthers<CR>", { desc = "Close [O]ther Buffers" })
 
 -- Esc in insert mode
 vim.keymap.set("i", "jk", "<Esc>")
