@@ -1,16 +1,17 @@
 return {
-  'LunarVim/breadcrumbs.nvim',
-  dependencies = {
-    { 'SmiteshP/nvim-navic' },
-  },
-  config = function()
-    require('nvim-navic').setup {
-      lsp = {
-        auto_attach = true,
-      },
-      highlight = true,
-    }
+	"LunarVim/breadcrumbs.nvim",
+	dependencies = {
+		{ "SmiteshP/nvim-navic" },
+	},
+	config = function()
+		require("nvim-navic").setup({
+			lsp = {
+				auto_attach = true,
+				preference = { "tsserver" },
+			},
+			highlight = true,
+		})
 
-    require('breadcrumbs').setup()
-  end,
+		require("breadcrumbs").setup()
+	end,
 }

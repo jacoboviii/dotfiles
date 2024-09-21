@@ -3,6 +3,7 @@ local wezterm = require("wezterm")
 local font = require("font")
 local settings = require("settings")
 local color_scheme = require("color_scheme")
+local act = wezterm.action
 
 -- This table will hold the configuration.
 local config = {}
@@ -17,7 +18,7 @@ end
 
 -- For example, changing the color scheme:
 font.apply_to_config(config)
-settings.apply_to_config(config)
+settings.apply_to_config(config, act)
 color_scheme.apply_to_config(config)
 
 -- and finally, return the configuration to wezterm

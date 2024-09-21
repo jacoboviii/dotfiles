@@ -8,7 +8,6 @@ return {
 
 		-- Additional lua configuration, makes nvim stuff amazing!
 		"folke/neodev.nvim",
-		"folke/neoconf.nvim",
 	},
 	config = function()
 		-- [[ Configure LSP ]]
@@ -83,16 +82,29 @@ return {
 		--
 		--  If you want to override the default filetypes that your language server will attach to you can
 		--  define the property 'filetypes' to the map in question.
+		--
+		local mason_registry = require("mason-registry")
+		local vue_language_server_path = mason_registry.get_package("vue-language-server"):get_install_path()
+				.. "/node_modules/@vue/language-server"
 		local servers = {
 			-- clangd = {},
 			intelephense = {},
 			gopls = {},
 			pyright = {},
 			-- rust_analyzer = {},
-			tsserver = {},
-			volar = {
-				filetypes = { "vue", "typescript", "javascript" },
+			tsserver = {
+				init_options = {
+					plugins = {
+						{
+							name = "@vue/typescript-plugin",
+							location = vue_language_server_path,
+							languages = { "vue" },
+						},
+					},
+				},
+				filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
 			},
+			volar = {},
 			html = { filetypes = { "html", "twig", "hbs" } },
 			templ = {},
 			lua_ls = {
@@ -107,7 +119,6 @@ return {
 
 		-- Setup neovim lua configuration
 		require("neodev").setup()
-		require("neoconf").setup()
 
 		-- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -122,10 +133,8 @@ return {
 
 		mason_lspconfig.setup_handlers({
 			function(server_name)
-				if require("neoconf").get(server_name .. ".disable") then
-					return
-				end
 				require("lspconfig")[server_name].setup({
+					init_options = (servers[server_name] or {}).init_options,
 					capabilities = capabilities,
 					on_attach = on_attach,
 					settings = servers[server_name],

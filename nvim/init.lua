@@ -1,3 +1,3 @@
-require 'keymaps'
-require 'plugin-manager'
-require 'settings'
+require("keymaps")
+require("plugin-manager")
+require("settings")
