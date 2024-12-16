@@ -85,14 +85,14 @@ return {
 		--
 		local mason_registry = require("mason-registry")
 		local vue_language_server_path = mason_registry.get_package("vue-language-server"):get_install_path()
-				.. "/node_modules/@vue/language-server"
+			.. "/node_modules/@vue/language-server"
 		local servers = {
 			-- clangd = {},
 			intelephense = {},
 			gopls = {},
 			pyright = {},
 			-- rust_analyzer = {},
-			tsserver = {
+			ts_ls = {
 				init_options = {
 					plugins = {
 						{
@@ -107,6 +107,7 @@ return {
 			volar = {},
 			html = { filetypes = { "html", "twig", "hbs" } },
 			templ = {},
+			astro = {},
 			lua_ls = {
 				Lua = {
 					workspace = { checkThirdParty = false },

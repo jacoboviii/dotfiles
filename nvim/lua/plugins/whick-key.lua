@@ -8,11 +8,13 @@ return {
 		})
 
 		wk.add({
+			{ "<leader>b", desc = "[B]uffers" },
 			{ "<leader>d", desc = "[D]ocument" },
 			{ "<leader>g", desc = "[G]it" },
 			{ "<leader>l", desc = "[L]SP" },
 			{ "<leader>s", desc = "[S]earch" },
 			{ "<leader>t", desc = "[T]oggle" },
+			{ "<leader>u", desc = "[U]ser" },
 		})
 		-- register which-key VISUAL mode
 		-- required for visual <leader>gs (hunk stage) to work

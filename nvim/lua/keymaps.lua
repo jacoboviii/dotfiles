@@ -12,11 +12,15 @@ vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 vim.keymap.set("n", "<leader>h", "<Cmd>noh<CR>", { desc = "Clear [H]ighlight" })
 vim.keymap.set("n", "<leader>q", "<Cmd>q<CR>", { desc = "[Q]uit" })
 vim.keymap.set("n", "<leader>w", "<Cmd>w<CR>", { desc = "[W]rite" })
-vim.keymap.set("n", "<leader>c", function()
-	vim.cmd.bdelete()
-	vim.cmd.blast()
-end, { desc = "[C]lose Current Buffer" })
-vim.keymap.set("n", "<leader>o", "<Cmd>BufferLineCloseOthers<CR>", { desc = "Close [O]ther Buffers" })
+vim.keymap.set("n", "<leader>o", function()
+	local bufs = vim.api.nvim_list_bufs()
+	local current_buf = vim.api.nvim_get_current_buf()
+	for _, i in ipairs(bufs) do
+		if i ~= current_buf then
+			vim.api.nvim_buf_delete(i, {})
+		end
+	end
+end, { desc = "Close [O]ther Buffers" })
 
 -- Register
 vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "To void register" })
@@ -33,6 +37,8 @@ vim.keymap.set("i", "jk", "<Esc>")
 -- Navigation
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
+
+-- Navigation
 
 -- Remap for dealing with word wrap
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
